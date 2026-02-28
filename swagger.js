@@ -1,4 +1,4 @@
-const path = require("path");
+
 const swaggerJsdoc = require("swagger-jsdoc");
 
 const options = {
@@ -33,10 +33,7 @@ const options = {
     ],
   },
 
-  apis: [
-  path.join(__dirname, "routes", "authRoutes.js"),
-  path.join(__dirname, "routes", "complaintRoutes.js"),
-],
+  apis: [],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
