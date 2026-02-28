@@ -10,10 +10,28 @@ const options = {
     },
     servers: [
       {
-        url: "https://your-render-url",
+        url: "https://smart-city-backend-1.onrender.com", // replace with real URL
+      },
+    ],
+
+    // 🔐 ADD THIS PART
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+
+    security: [
+      {
+        bearerAuth: [],
       },
     ],
   },
+
   apis: ["**/*.js"],
 };
 
