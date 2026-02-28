@@ -1,41 +1,78 @@
 
-const swaggerJsdoc = require("swagger-jsdoc");
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Smart City Management API",
-      version: "1.0.0",
-      description: "API documentation for Smart City Backend",
+const swaggerSpec = {
+  openapi: "3.0.0",
+  info: {
+    title: "Smart City Management API",
+    version: "1.0.0",
+    description: "API documentation for Smart City Backend",
+  },
+  servers: [
+    {
+      url: "https://smart-city-backend-1.onrender.com",
     },
-    servers: [
-      {
-        url: "https://smart-city-backend-1.onrender.com", // replace with real URL
+  ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
       },
-    ],
-
-    // 🔐 ADD THIS PART
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+    },
+  },
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  paths: {
+    "/api/auth/register": {
+      post: {
+        summary: "Register new user",
+        tags: ["Auth"],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+              },
+            },
+          },
+        },
+        responses: {
+          201: { description: "User registered" },
         },
       },
     },
-
-    security: [
-      {
-        bearerAuth: [],
+    "/api/auth/login": {
+      post: {
+        summary: "Login user",
+        tags: ["Auth"],
+        responses: {
+          200: { description: "JWT Token returned" },
+        },
       },
-    ],
+    },
+    "/api/complaints": {
+      post: {
+        summary: "Create complaint",
+        tags: ["Complaints"],
+        security: [{ bearerAuth: [] }],
+        responses: {
+          201: { description: "Complaint created" },
+        },
+      },
+      get: {
+        summary: "Get complaints",
+        tags: ["Complaints"],
+        security: [{ bearerAuth: [] }],
+        responses: {
+          200: { description: "List of complaints" },
+        },
+      },
+    },
   },
-
-  apis: [],
 };
-
-const swaggerSpec = swaggerJsdoc(options);
 
 module.exports = swaggerSpec;
